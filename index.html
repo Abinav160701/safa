@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6thstreet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Simple dummy page -->
+    <header>
+        <h1>6thstreet.com - (fake)</h1>
+    </header>
+ 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget">
+        <div id="chatbot-button" class="chatbot-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H5.17L4 17.17V4H20V16Z" fill="currentColor"/>
+                <path d="M7 9H17V11H7V9Z" fill="currentColor"/>
+                <path d="M7 12H15V14H7V12Z" fill="currentColor"/>
+            </svg>
+        </div>
+        
+        <div id="chatbot-container" class="chatbot-container hidden">
+            <div class="chatbot-header">
+                <h3>Fashion Assistant</h3>
+                <div class="chatbot-controls">
+                    <select id="language-select">
+                        <option value="English">English</option>
+                        <option value="Arabic">Arabic</option>
+                    </select>
+                    <button id="close-chatbot" class="close-button">×</button>
+                </div>
+            </div>
+            
+            <div id="chat-messages" class="chat-messages">
+                <div class="message assistant">
+                    <div class="message-content">
+                        Hello! I'm SAFA, I am here to help you pick the perfect outfit for any occasion. Do you have something in mind?
+                    </div>
+                </div>
+            </div>
+            
+            <div id="thumbnails-container" class="thumbnails-container hidden">
+                <div id="thumbnails" class="thumbnails"></div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="chat-input" placeholder="Describe what you're looking for..." />
+                    <button id="voice-button" class="voice-button">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 14C13.66 14 15 12.66 15 11V5C15 3.34 13.66 2 12 2C10.34 2 9 3.34 9 5V11C9 12.66 10.34 14 12 14Z" fill="currentColor"/>
+                            <path d="M17 11C17 14.53 14.39 17.44 11 17.93V21H13V23H11H9V21H11V17.93C7.61 17.44 5 14.53 5 11H7C7 13.76 9.24 16 12 16C14.76 16 17 13.76 17 11H17Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <button id="send-button" class="send-button">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <script src="script.js"></script>
+</body>
+</html>

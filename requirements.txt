@@ -1,0 +1,13 @@
+
+fastapi
+uvicorn
+langgraph
+langchain
+langchain-openai
+langchain-community
+numpy
+faiss-cpu
+pandas
+pydantic
+python-multipart
+aiofiles
