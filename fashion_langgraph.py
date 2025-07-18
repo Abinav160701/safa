@@ -118,7 +118,9 @@ prompt_filt = ChatPromptTemplate.from_messages(
         (
             "system",
             "Extract shopping filters from the prompt. Return JSON with keys exactly: category, include_brands, "
-            "exclude_brands, include_colors, exclude_colors, price_min, price_max, gender(MEN, WOMEN, KIDS). "
+            "exclude_brands, include_colors, exclude_colors, price_min, price_max, gender(MEN, WOMEN, KIDS)," 
+            "sleeves (sleeveless, half sleeve, full sleeve),"
+            "gender should be set to kids if you detect the user is looking for kids clothing, "
             "Leave a field empty (null or []) if not specified.",
         ),
         "For 'category' infer high-level level_2 such as CLOTHING, SHOES, BAGS.",
@@ -303,11 +305,12 @@ def _embed_query(text: str) -> np.ndarray:
     return vec
 
 
-def _meta_pass(meta, *, cat, inc_c, exc_c, inc_b, exc_b,gender, pmin, pmax, relax_brand, relax_price) -> bool:
+def _meta_pass(meta, *, cat, inc_c, exc_c, inc_b, exc_b,gender, pmin, pmax, relax_brand, relax_price, sleeves_filt) -> bool:
     colour = str(meta.get("color", "")).lower()
     brand  = str(meta.get("brand", "")).lower()
     price  = float(meta.get("sale_price", 0) or 0)
     level_1 = str(meta.get("level_1", "")).upper()
+    sleeves = str(meta.get("sleeves", "")).lower()
     if gender and meta.get("level_1", "").upper() != gender:
         return False
     if cat and meta.get("level_2", "").upper() != cat:
@@ -319,6 +322,9 @@ def _meta_pass(meta, *, cat, inc_c, exc_c, inc_b, exc_b,gender, pmin, pmax, rela
     if not relax_brand and inc_b and not any(b in brand for b in inc_b):
         return False
     if exc_b and any(b in brand for b in exc_b):
+        return False
+    print(f"DEBUG: Checking sleeves - {sleeves_filt} vs {meta.get('sleeves', '')}")
+    if sleeves_filt and sleeves_filt not in str(meta.get("sleeves", "")).lower():
         return False
     if not relax_price:
         if pmin is not None and price < pmin:
@@ -367,6 +373,7 @@ def search_catalog(
     original_exc_c = [c.lower() for c in filters.get("exclude_colors", [])]
     pmin  = filters.get("price_min")
     pmax  = filters.get("price_max")
+    sleeves = filters.get("sleeves")
 
     inc_c = expand_color_list(original_inc_c)
     exc_c = expand_color_list(original_exc_c)
@@ -391,6 +398,7 @@ def search_catalog(
                 pmax=pmax,
                 relax_brand=relax_brand,
                 relax_price=relax_price,
+                sleeves_filt=sleeves
             )
         ]
         if pool_idx:
